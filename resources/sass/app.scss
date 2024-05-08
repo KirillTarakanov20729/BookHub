@@ -1,0 +1,34 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+body {
+    background-color: #DCC7AA;
+}
+
+.card {
+    background-color: #fff5d7;
+}
+
+button {
+    background-color: #DCC7AA !important;
+    color: black;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+
