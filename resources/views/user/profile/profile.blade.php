@@ -2,32 +2,15 @@
 
 @section('index')
 
-    <x-card.item class="shadow-sm w-100 mb-5">
-        <h2 class="fw-bold">Текущая книга</h2>
-        <p class="fs-4">{{ $active_book->name }}</p>
-    </x-card.item>
+    @include('includes.user.profile.data-block', ['title' => 'Текущая книга', 'data' => isset($active_book) ? $active_book->name : 'Нет активной книги'])
 
-    <x-card.item class="shadow-sm w-100 mb-5">
-        <h2 class="fw-bold">Любимый жанр</h2>
-        <p class="fs-4">Фантастика</p>
-    </x-card.item>
+    @include('includes.user.profile.data-block', ['title' => 'Любимые жанры', 'data' => collect($favorite_genres)->map(fn($genre) => $genre->name)->join(', ')])
 
-    <x-card.item class="shadow-sm w-100 mb-5">
-        <h2 class="fw-bold">Всего книг прочитано</h2>
-        <p class="fs-4">4</p>
-    </x-card.item>
+    @include('includes.user.profile.data-block', ['title' => 'Любимые авторы', 'data' => collect($favorite_authors)->map(fn($author) => $author->name)->join(', ')])
 
-    <x-card.item class="shadow-sm w-100 mb-5">
-        <h2 class="fw-bold">Подписка</h2>
-        @if($user->subscription->subscription_type_id == 1)
-            <p class="fs-4">Без подписки</p>
-        @elseif($user->subscription->subscription_type_id == 2)
-            <p class="fs-4">Базовая подписка</p>
-        @else()
-            <p class="fs-4">Премиум подписка</p>
-        @endif
+    @include('includes.user.profile.data-block', ['title' => 'Всего книг прочитано', 'data' => $total_read_books])
 
-    </x-card.item>
+    @include('includes.user.profile.data-block', ['title' => 'Подписка', 'data' => $user->subscription->subscription_type_id == 1 ? 'Без подписки' : ($user->subscription->subscription_type_id == 2 ? 'Базовая подписка' : 'Премиум подписка')])
 
     <x-form.button class="w-25 mb-3">
         Изменить подписку
@@ -38,10 +21,5 @@
             Выйти
         </x-form.button>
     </x-form.form>
-
-
-
-
-
 
 @endsection

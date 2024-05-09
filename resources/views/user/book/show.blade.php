@@ -18,6 +18,24 @@
                 </x-card.a>
             </x-card.button>
 
+            @if(!$book->users->contains(auth()->user()))
+                <x-form.form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST">
+                    <x-form.button class="mt-2" style="width: 100%;">
+                        <x-card.a>
+                            ОТМЕТИТЬ КАК ПРОЧИТАННУЮ
+                        </x-card.a>
+                    </x-form.button>
+                </x-form.form>
+            @else
+                <x-form.form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST"
+                             class="w-100">
+                    <x-form.button class="mt-2" style="width: 100%;">
+                        <x-card.a>
+                            КНИГА ПРОЧИТАНА
+                        </x-card.a>
+                    </x-form.button>
+                </x-form.form>
+            @endif
         </div>
 
 
@@ -28,20 +46,22 @@
             </div>
 
             <div class="mt-2">
-                @include('includes.user.book-card.entity-block', ['title' => 'Авторы', 'entities' => $book->authors])
+                @include('includes.user.show-books.book-card.entity-block', ['title' => 'Авторы', 'entities' => $book->authors])
 
-                @include('includes.user.book-card.entity-block', ['title' => 'Жанры', 'entities' => $book->genres])
+                @include('includes.user.show-books.book-card.entity-block', ['title' => 'Жанры', 'entities' => $book->genres])
 
-                @include('includes.user.book-card.entity-block', ['title' => 'Издательства', 'entities' => $book->publishers])
+                @include('includes.user.show-books.book-card.entity-block', ['title' => 'Издательства', 'entities' => $book->publishers])
 
-                @include('includes.user.book-card.info-block', ['title' => 'Возрастные ограничения', 'info' => $book->age_limit->age_limit. '+'])
+                @include('includes.user.show-books.book-card.info-block', ['title' => 'Возрастные ограничения', 'info' => $book->age_limit->age_limit. '+'])
 
-                @include('includes.user.book-card.info-block', ['title' => 'Год написания', 'info' => $book->release_date->format('Y')])
+                @include('includes.user.show-books.book-card.info-block', ['title' => 'Год написания', 'info' => $book->release_date->format('Y')])
 
             </div>
         </div>
 
 
     </div>
+
+    <x-form.error name="error"/>
 
 @endsection

@@ -15,18 +15,15 @@
 
                                     <x-form.item>
                                         <x-form.input type="email" name="email" placeholder="Email"/>
-                                        <x-form.error name="email" />
                                     </x-form.item>
 
                                     <x-form.item>
                                         <x-form.input type="password" name="password" placeholder="Пароль"/>
-                                        <x-form.error name="password" />
                                     </x-form.item>
 
-                                    <x-form.error name="error"/>
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <x-form.checkbox name="remember">
+                                        <x-form.checkbox name="remember" value="1">
                                             Запомнить меня
                                         </x-form.checkbox>
                                     </div>
@@ -37,7 +34,7 @@
                                         </x-form.a>
                                     </x-form.p>
 
-
+                                    <x-form.error name="error"/>
                                     <x-form.button>
                                         Войти
                                     </x-form.button>

@@ -7,8 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Books\GetBookRequest;
 use App\Models\Book;
 use App\Services\User\UserBookService;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class BookController extends Controller
@@ -54,23 +55,26 @@ class BookController extends Controller
         ]);
     }
 
-    public function read(Book $book)
+    public function read(Book $book): RedirectResponse|ResponseFactory
     {
-        $filePath = $book->text_path;
-
-        if (Storage::exists($filePath)) {
-            $fileContent = Storage::get($filePath);
-
-            Auth::user()->active_book_id = $book->id;
-            Auth::user()->save();
-
-            return response($fileContent, 200)
+        if (!$this->service->get_pdf_file($book)){
+            return redirect()->back()->withErrors(['error' => 'Текст книги не найден']);
+        }
+        else {
+            return response($this->service->get_pdf_file($book), 200)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'inline; filename="' . $book->name . '.pdf"')
-                ->header('Content-Length', strlen($fileContent));
-        } else {
-            return response()->json(['message' => 'Файл не найден'], 404);
+                ->header('Content-Length', strlen($this->service->get_pdf_file($book)));
         }
+    }
+
+    public function was_read(int $id): RedirectResponse
+    {
+        $book = $this->service->get_book($id);
+
+        $this->service->set_book_was_read($book);
+
+        return redirect()->back();
     }
 
 }

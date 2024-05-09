@@ -52,4 +52,9 @@ class Book extends Model
     {
         return $this->belongsTo(AgeLimit::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

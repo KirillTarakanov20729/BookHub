@@ -12,6 +12,7 @@ Route::prefix('books')->middleware('auth')->group(function() {
 
     Route::get('/{book}/read', [\App\Http\Controllers\User\Book\BookController::class, 'read'])->name('user.books.read');
 
+    Route::post('/{book}/was_read', [\App\Http\Controllers\User\Book\BookController::class, 'was_read'])->name('user.books.was_read');
 });
 
 

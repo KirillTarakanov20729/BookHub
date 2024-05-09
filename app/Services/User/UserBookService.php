@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Models\Book;
 use App\Services\Includes\BookService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserBookService extends BookService
@@ -23,5 +24,23 @@ class UserBookService extends BookService
         return $data;
     }
 
+    public function get_pdf_file(Book $book)
+    {
+        if (Storage::exists($book->text_path)) {
+            $fileContent = Storage::get($book->text_path);
+
+            Auth::user()->active_book_id = $book->id;
+            Auth::user()->save();
+
+            return $fileContent;
+        } else {
+            return false;
+        }
+    }
+
+    public function set_book_was_read(Book $book)
+    {
+        $book->users()->toggle(Auth::id());
+    }
 
 }

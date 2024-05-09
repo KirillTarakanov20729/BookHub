@@ -6,7 +6,7 @@
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
         @foreach($books as $book)
-            @include('includes.user.card.book-card', ['book' => $book])
+            @include('includes.user.index-books.card.book-card', ['book' => $book])
         @endforeach
     </div>
     @if($with_pagination)
