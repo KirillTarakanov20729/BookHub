@@ -14,7 +14,7 @@
 
                     @if(!@empty(Auth::user()->active_book_id))
                     <x-navbar.li>
-                        <x-navbar.a href="{{ route('user.books.read', ['book' => \Illuminate\Support\Facades\Auth::user()->active_book_id]) }}">Текущая книга</x-navbar.a>
+                        <x-navbar.a href="{{ route('user.books.show', ['book' => \Illuminate\Support\Facades\Auth::user()->active_book_id]) }}">Текущая книга</x-navbar.a>
                     </x-navbar.li>
                     @endif
 

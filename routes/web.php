@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::redirect('/', '/books/home')->middleware('auth');
 
 require __DIR__.'/auth.php';
 

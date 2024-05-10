@@ -7,9 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Books\GetBookRequest;
 use App\Models\Book;
 use App\Services\User\UserBookService;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class BookController extends Controller
@@ -25,7 +23,7 @@ class BookController extends Controller
     {
         $data = $this->service->get_books_for_main_page();
 
-        return view('user.book.main', [
+        return view('user.books.main', [
             'data' => $data
         ]);
     }
@@ -37,7 +35,7 @@ class BookController extends Controller
         $books = $this->service->get_books($data);
 
         $data = $this->service->get_data();
-        return view('user.book.index',[
+        return view('user.books.index',[
             'books' => $books,
             'genres' => $data['genres'],
             'authors' => $data['authors'],
@@ -50,21 +48,23 @@ class BookController extends Controller
     {
         $book = $this->service->get_book($id);
 
-        return view('user.book.show', [
+        return view('user.books.show', [
             'book' => $book
         ]);
     }
 
-    public function read(Book $book): RedirectResponse|ResponseFactory
+    public function read(Book $book)
     {
-        if (!$this->service->get_pdf_file($book)){
+        $response = $this->service->get_pdf_file($book);
+
+        if (!$response) {
             return redirect()->back()->withErrors(['error' => 'Текст книги не найден']);
         }
         else {
-            return response($this->service->get_pdf_file($book), 200)
+            return response($response, 200)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'inline; filename="' . $book->name . '.pdf"')
-                ->header('Content-Length', strlen($this->service->get_pdf_file($book)));
+                ->header('Content-Length', strlen($response));
         }
     }
 

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('books')->middleware('auth')->group(function() {
+Route::prefix('books')->group(function() {
 
     Route::get('/home', [\App\Http\Controllers\User\Book\BookController::class, 'main'])->name('user.books.main');
 
