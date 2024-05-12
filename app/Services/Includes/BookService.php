@@ -9,7 +9,9 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Publisher;
 use App\Models\SubscriptionType;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class BookService
 {
@@ -60,6 +62,11 @@ class BookService
     public function get_book(int $id): Book
     {
         return Book::query()->findOrFail($id);
+    }
+
+    public function get_user(): Authenticatable
+    {
+        return Auth::user();
     }
 
 

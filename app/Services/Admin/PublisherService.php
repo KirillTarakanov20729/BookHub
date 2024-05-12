@@ -14,13 +14,13 @@ class PublisherService
 
     public function get_publishers(SearchPublisherDTO $data): LengthAwarePaginator
     {
-        $publisher = Publisher::query();
+        $publishers = Publisher::query();
 
         if (isset($data->name)) {
-            $publisher->where('name', 'like', '%' . $data->name . '%');
+            $publishers->where('name', 'like', '%' . $data->name . '%');
         }
 
-        return $publisher->paginate(20);
+        return $publishers->paginate(20);
     }
 
     public function get_publisher(int $id): Publisher

@@ -39,8 +39,20 @@
                 </td>
             @endif
 
+            @if(isset($entity->features))
+                <td>
+                    @foreach($entity->features as $feature)
+                        {{ $feature->name }} <hr>
+                    @endforeach
+                </td>
+            @endif
+
             @if(isset($entity->age_limit))
                 <td>{{ $entity->age_limit->age_limit }}+</td>
+            @endif
+
+            @if(isset($entity->price))
+                <td>{{ $entity->price }}</td>
             @endif
 
             @if(isset($entity->release_date))

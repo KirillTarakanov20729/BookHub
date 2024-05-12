@@ -13,13 +13,13 @@ class AuthorService
 {
     public function get_authors(SearchAuthorDTO $data): LengthAwarePaginator
     {
-        $author = Author::query();
+        $authors = Author::query();
 
         if (isset($data->name)) {
-            $author->where('name', 'like', '%' . $data->name . '%');
+            $authors->where('name', 'like', '%' . $data->name . '%');
         }
 
-        return $author->paginate(20);
+        return $authors->paginate(20);
     }
 
     public function get_author(int $id): Author

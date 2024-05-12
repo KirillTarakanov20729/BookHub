@@ -78,6 +78,8 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Publisher> $publishers
  * @property-read int|null $publishers_count
  * @property-read \App\Models\SubscriptionType $subscription_type
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
  * @method static \Database\Factories\BookFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Book newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Book newQuery()
@@ -95,6 +97,19 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereUpdatedAt($value)
  */
 	class Book extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $subscription_types
+ * @property-read int|null $subscription_types_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature query()
+ */
+	class Feature extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -174,11 +189,14 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $name
  * @property int $price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Feature> $features
+ * @property-read int|null $features_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Subscription> $subscriptions
  * @property-read int|null $subscriptions_count
  * @method static \Database\Factories\SubscriptionTypeFactory factory($count = null, $state = [])
@@ -187,6 +205,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType query()
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereUpdatedAt($value)
  */
@@ -208,6 +227,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
+ * @property-read int|null $books_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \App\Models\Subscription $subscription

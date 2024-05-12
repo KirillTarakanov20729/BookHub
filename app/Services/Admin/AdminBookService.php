@@ -54,15 +54,15 @@ class AdminBookService extends BookService
 
             if (isset($data->text)) {
                 Storage::delete($book->text_path);
-                $text_path = Storage::disk('public')->put('books/text', $data->text);
+                $text_path       = Storage::disk('public')->put('books/text', $data->text);
                 $book->text_path = $text_path;
             }
 
-           $book->save();
-
-           $book->authors()->sync($data->authors_id);
-           $book->genres()->sync($data->genres_id);
-           $book->publishers()->sync($data->publishers_id);
+            if ($book->save()) {
+                $book->authors()->sync($data->authors_id);
+                $book->genres()->sync($data->genres_id);
+                $book->publishers()->sync($data->publishers_id);
+            }
 
            return true;
         } catch(\Exception $exception) {

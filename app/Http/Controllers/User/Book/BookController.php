@@ -48,8 +48,11 @@ class BookController extends Controller
     {
         $book = $this->service->get_book($id);
 
+        $user = $this->service->get_user();
+
         return view('user.books.show', [
-            'book' => $book
+            'book' => $book,
+            'user' => $user
         ]);
     }
 

@@ -17,7 +17,11 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-        return view('user.subscriptions.index');
+        $subscription_types = $this->service->get_subscription_types();
+
+        return view('user.subscriptions.index', [
+            'subscription_types' => $subscription_types
+        ]);
     }
 
     public function change_subscription(int $subscription_type_id)

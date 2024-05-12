@@ -43,4 +43,21 @@
         </x-card.button>
     </x-card.item>
 
+    <x-card.item>
+        <x-card.button>
+            <x-card.a href="{{route('admin.subscription_types.index')}}">
+                Виды подписок
+            </x-card.a>
+        </x-card.button>
+    </x-card.item>
+
+    <x-card.item>
+        <x-card.button>
+            <x-card.a href="{{route('admin.features.index')}}">
+                Особенности
+            </x-card.a>
+        </x-card.button>
+    </x-card.item>
+
+
 @endSection

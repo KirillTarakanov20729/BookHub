@@ -13,13 +13,13 @@ class GenreService
 {
     public function get_genres(SearchGenreDTO $data): LengthAwarePaginator
     {
-        $genre = Genre::query();
+        $genres = Genre::query();
 
         if (isset($data->name)) {
-            $genre->where('name', 'like', '%' . $data->name . '%');
+            $genres->where('name', 'like', '%' . $data->name . '%');
         }
 
-        return $genre->paginate(20);
+        return $genres->paginate(20);
     }
 
     public function get_genre(int $id): Genre

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Genre extends Model
+class Feature extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Genre extends Model
         'name'
     ];
 
-    public function books(): BelongsToMany
+    public function subscription_types(): BelongsToMany
     {
         return $this->BelongsToMany(Book::class);
     }

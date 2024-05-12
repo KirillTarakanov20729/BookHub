@@ -12,11 +12,19 @@
                  src="{{ asset("storage/$book->image_path") }}"
                  style="width: 100%; height: 100%; pointer-events: none;" alt="Обложка книги"/>
 
-            <x-card.button class="mt-2" style="width: 100%;">
-                <x-card.a href=" {{ route('user.books.read', ['book' => $book->id]) }}">
-                    ЧИТАТЬ
-                </x-card.a>
-            </x-card.button>
+            @if($user->subscription->subscription_type_id < $book->subscription_type_id)
+                <x-card.button class="mt-2" style="width: 100%;">
+                    <x-card.a href="{{ route('user.subscriptions.index') }}">
+                        ПОВЫСЬТЕ УРОВЕНЬ ПОДПИСКИ
+                    </x-card.a>
+                </x-card.button>
+            @else
+                <x-card.button class="mt-2" style="width: 100%;">
+                    <x-card.a href=" {{ route('user.books.read', ['book' => $book->id]) }}">
+                        ЧИТАТЬ
+                    </x-card.a>
+                </x-card.button>
+            @endif
 
             @if(!$book->users->contains(auth()->user()))
                 <x-form.form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST">

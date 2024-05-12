@@ -7,9 +7,11 @@
 
         <div class="card-body">
             <h1 class="card-title pricing-card-title"> {{ $price }}₽<small class="text-muted fw-light">/месяц</small></h1>
+
             <ul class="list-unstyled mt-3 mb-4">
-                @foreach($features as $feature) @endforeach
-                <li class="fs-4"> {{ $feature }}</li>
+                @foreach($subscription_type->features as $feature)
+                    <li>{{ $feature->name }}</li>
+                @endforeach
             </ul>
 
             <x-card.button type="button" class="w-100 btn btn-lg">

@@ -4,10 +4,13 @@ namespace App\Services\User;
 
 use App\Models\Subscription;
 use App\Models\SubscriptionType;
-use App\Models\User;
 
 class SubscriptionService
 {
+    public function get_subscription_types()
+    {
+        return SubscriptionType::all();
+    }
     public function change_subscription($user, int $subscription_type_id)
     {
         $old_subscription = $user->subscription;

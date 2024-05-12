@@ -16,6 +16,10 @@ Route::middleware('is_admin')->prefix('admin')->group(function() {
 
     require __DIR__ . '/books.php';
 
+    require __DIR__ . '/features.php';
+
+    require __DIR__ . '/subscription-types.php';
+
 });
 
 
