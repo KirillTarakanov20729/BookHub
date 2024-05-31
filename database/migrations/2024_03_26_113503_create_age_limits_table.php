@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('age_limits', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->integer('age_limit');
         });
     }

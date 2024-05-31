@@ -11,7 +11,9 @@ use App\Http\Requests\Admin\Feature\StoreFeatureRequest;
 use App\Http\Requests\Admin\Feature\UpdateFeatureRequest;
 use App\Services\Admin\FeatureService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class FeatureController extends Controller
 {
@@ -23,7 +25,7 @@ class FeatureController extends Controller
 
     public function index(GetFeatureRequest $request): View
     {
-        $data = new SearchFeatureDTO($request->validated());
+        $data     = new SearchFeatureDTO($request->validated());
 
         $features = $this->service->get_features($data);
 
@@ -47,7 +49,7 @@ class FeatureController extends Controller
         }
     }
 
-    public function edit(int $featureID): View
+    public function edit(int $featureID): View|RedirectResponse
     {
         $feature = $this->service->get_feature($featureID);
 

@@ -2,7 +2,7 @@
 
 namespace App\DTO\Admin\SubscriptionType;
 
-use App\DTO\UpdateEntityDTO;
+use App\DTO\Admin\UpdateEntityDTO;
 
 class UpdateSubscriptionTypeDTO extends UpdateEntityDTO
 {

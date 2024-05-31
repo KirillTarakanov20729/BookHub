@@ -2,7 +2,7 @@
 
 @section('form')
 
-    <x-form.form action="{{route('admin.subscription_types.update', ['id' => $subscription_type->id])}}" method="POST">
+    <x-form.store-form action="{{route('admin.subscription_types.update', ['id' => $subscription_type->id])}}" method="POST">
         @method('PUT')
 
         <x-form.label>
@@ -33,6 +33,6 @@
 
         <input type="hidden" name="id" value="{{ $subscription_type->id }}">
 
-    </x-form.form>
+    </x-form.store-form>
 
 @endsection

@@ -2,9 +2,14 @@
 
 namespace App\DTO\Admin\Author;
 
-use App\DTO\StoreEntityDTO;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class StoreAuthorDTO extends StoreEntityDTO
+class StoreAuthorDTO extends DataTransferObject
 {
+    public string $first_name;
+
+    public string $last_name;
+
+    public string $middle_name;
 
 }

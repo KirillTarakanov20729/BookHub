@@ -2,7 +2,7 @@
 
 namespace App\DTO\Admin\Genre;
 
-use App\DTO\UpdateEntityDTO;
+use App\DTO\Admin\UpdateEntityDTO;
 
 class UpdateGenreDTO extends UpdateEntityDTO
 {

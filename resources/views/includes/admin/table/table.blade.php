@@ -9,7 +9,14 @@
     @foreach($entities as $entity)
         <tr>
             <th>{{ $entity->id }}</th>
-            <td>{{ $entity->name }}</td>
+
+            @if(isset($entity->name))
+                <td>{{ $entity->name }}</td>
+            @endif
+
+            @if(isset($entity->full_name))
+                <td>{{ $entity->full_name }}</td>
+            @endif
 
             @if(isset($entity->email))
                 <td>{{ $entity->email }}</td>
@@ -26,7 +33,7 @@
             @if(isset($entity->authors))
                 <td>
                     @foreach($entity->authors as $author)
-                        {{ $author->name }} <hr>
+                        {{ $author->full_name }} <hr>
                     @endforeach
                 </td>
             @endif
@@ -59,24 +66,12 @@
                 <td>{{ $entity->release_date->format('Y') }}</td>
             @endif
 
-            @if(isset($entity->subscription_type_id))
-                @if($entity->subscription_type_id == 1)
-                    <td>Без подписки</td>
-                @elseif($entity->subscription_type_id == 2)
-                    <td>Базовая подписка</td>
-                @else
-                    <td>Премиум подписка</td>
-                @endif
+            @if(isset($entity->subscription_type))
+                <td>{{ $entity->subscription_type->name }}</td>
             @endif
 
             @if(isset($entity->subscription->subscription_type_id))
-                @if($entity->subscription->subscription_type_id == 1)
-                    <td>Без подписки</td>
-                @elseif($entity->subscription->subscription_type_id == 2)
-                    <td>Базовая подписка</td>
-                @else
-                    <td>Премиум подписка</td>
-                @endif
+                <td> {{ $entity->subscription->subscription_type->name }}</td>
             @endif
 
             @if(empty($entity->email))

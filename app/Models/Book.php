@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
+
 
     protected $fillable = [
         'name',
@@ -21,10 +23,6 @@ class Book extends Model
         'subscription_type_id',
         'image_path',
         'text_path',
-    ];
-
-    protected $casts = [
-        'release_date' => 'date'
     ];
 
 

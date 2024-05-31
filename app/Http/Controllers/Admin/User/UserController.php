@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\DTO\Admin\User\SearchUserDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\GetUserRequest;
 use App\Services\Admin\UserService;
@@ -14,12 +15,18 @@ class UserController extends Controller
     {
         $this->service = $service;
     }
+
     public function index(GetUserRequest $request): View
     {
-        $data = $request->validated();
+        $dataForSearch  = new SearchUserDTO($request->validated());
 
-        $users = $this->service->get_users($data);
+        $users = $this->service->get_users($dataForSearch);
 
-        return view('admin.users.index', ['users' => $users]);
+        $dataForIndex = $this->service->get_index_data();
+
+        return view('admin.users.index', [
+            'users' => $users,
+            'data' => $dataForIndex
+        ]);
     }
 }

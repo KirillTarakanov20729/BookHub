@@ -43,11 +43,13 @@ class AuthorTest extends TestCase
         $response->assertSuccessful();
 
         $this->post('admin/authors', [
-            'name' => 'test',
+            'first_name' => 'test',
+            'last_name' => 'test',
+            'middle_name' => 'test',
         ])->assertRedirect('admin/authors');
 
         $this->assertDatabaseHas('authors', [
-            'name' => 'test',
+            'first_name' => 'test',
         ]);
     }
 
@@ -84,12 +86,14 @@ class AuthorTest extends TestCase
 
         $this->put('admin/authors/' . $author->id, [
             'id' => $author->id,
-            'name' => 'test',
+            'first_name' => 'test',
+            'last_name' => 'test',
+            'middle_name' => 'test',
         ])->assertRedirect('admin/authors');
 
         $this->assertDatabaseHas('authors', [
             'id' => $author->id,
-            'name' => 'test',
+            'first_name' => 'test',
         ]);
     }
 

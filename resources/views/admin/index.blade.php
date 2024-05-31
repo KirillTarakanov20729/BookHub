@@ -2,62 +2,20 @@
 
 @section('index')
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{ route('admin.books.index') }}">
-                Книги
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.books.index', 'title' => 'Книги'])
 
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.publishers.index', 'title' => 'Издатели'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{ route('admin.publishers.index') }}">
-                Издательства
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.authors.index', 'title' => 'Авторы'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{ route('admin.authors.index') }}">
-                Авторы
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.genres.index', 'title' => 'Жанры'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{ route('admin.genres.index') }}">
-                Жанры
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.users.index', 'title' => 'Пользователи'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{route('admin.users.index')}}">
-                Пользователи
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.subscription_types.index', 'title' => 'Виды подписок'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{route('admin.subscription_types.index')}}">
-                Виды подписок
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
+   @include('includes.admin.index.admin-index-page-button', ['route' => 'admin.features.index', 'title' => 'Особенности'])
 
-    <x-card.item>
-        <x-card.button>
-            <x-card.a href="{{route('admin.features.index')}}">
-                Особенности
-            </x-card.a>
-        </x-card.button>
-    </x-card.item>
-
+    <x-form.error name="error" />
 
 @endSection

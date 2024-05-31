@@ -2,6 +2,7 @@
 
 namespace App\DTO\Admin\Book;
 
+
 use Spatie\DataTransferObject\DataTransferObject;
 
 class StoreBookDTO extends DataTransferObject
@@ -9,7 +10,7 @@ class StoreBookDTO extends DataTransferObject
     public string $name;
     public string $short_description;
     public string $full_description;
-    public string $release_date;
+    public int $release_date;
     public $image;
     public $text;
     public int $subscription_type_id;

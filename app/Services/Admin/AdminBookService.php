@@ -6,14 +6,13 @@ use App\DTO\Admin\Book\StoreBookDTO;
 use App\DTO\Admin\Book\UpdateBookDTO;
 use App\Models\Book;
 use App\Services\Includes\BookService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use ZipArchive;
 
 
 class AdminBookService extends BookService
 {
-
     public function store_book(StoreBookDTO $data): bool
     {
         try {
@@ -30,8 +29,12 @@ class AdminBookService extends BookService
                 $book->authors()->sync($data->authors_id);
                 $book->genres()->sync($data->genres_id);
                 $book->publishers()->sync($data->publishers_id);
-            }
 
+                Cache::forget('books_for_main_page');
+                Cache::put('book_'. $book->id, $book->load('authors', 'genres', 'publishers', 'users', 'age_limit'), 3600);
+                Cache::put('authors_from_book_' . $book->id, $book->authors->pluck('id'), 3600);
+                Cache::put('genres_from_book_' . $book->id, $book->genres->pluck('id'), 3600);
+            }
 
             return true;
         } catch(\Exception $exception) {
@@ -62,6 +65,18 @@ class AdminBookService extends BookService
                 $book->authors()->sync($data->authors_id);
                 $book->genres()->sync($data->genres_id);
                 $book->publishers()->sync($data->publishers_id);
+
+                $books = $this->get_books_for_main_page();
+
+                foreach ($books->newest_books->merge($books->fantasy_books)->merge($books->dostoevsky_books) as $main_book) {
+                    if ($main_book->getKey() == $book->getKey()) {
+                        Cache::forget('books_for_main_page');
+                    }
+                }
+
+                Cache::put('book_'. $data->id, $book->load('authors', 'genres', 'publishers', 'users', 'age_limit'), 3600);
+                Cache::put('authors_from_book_' . $book->id, $book->authors->pluck('id'), 3600);
+                Cache::put('genres_from_book_' . $book->id, $book->genres->pluck('id'), 3600);
             }
 
            return true;
@@ -79,6 +94,18 @@ class AdminBookService extends BookService
             $book->genres()->detach();
             $book->authors()->detach();
             $book->publishers()->detach();
+
+            $books = $this->get_books_for_main_page();
+
+            foreach ($books->newest_books->merge($books->fantasy_books)->merge($books->dostoevsky_books) as $main_book) {
+                if ($main_book->getKey() == $id) {
+                    Cache::forget('books_for_main_page');
+                }
+            }
+
+            Cache::forget('book_'.$id);
+            Cache::forget('authors_from_book_' . $book->id);
+            Cache::forget('genres_from_book_' . $book->id);
 
             Storage::delete($book->image_path);
             Storage::delete($book->text_path);
@@ -99,8 +126,5 @@ class AdminBookService extends BookService
         $book->subscription_type_id = $data->subscription_type_id;
         $book->age_limit_id         = $data->age_limit_id;
     }
-
-
-
 
 }

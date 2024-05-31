@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('feature_id')->constrained();
             $table->foreignId('subscription_type_id')->constrained();
-            $table->timestamps();
         });
     }
 

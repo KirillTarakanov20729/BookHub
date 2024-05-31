@@ -11,7 +11,9 @@ use App\Http\Requests\Admin\Genre\StoreGenreRequest;
 use App\Http\Requests\Admin\Genre\UpdateGenreRequest;
 use App\Services\Admin\GenreService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class GenreController extends Controller
 {
@@ -23,7 +25,7 @@ class GenreController extends Controller
 
     public function index(GetGenreRequest $request): View
     {
-        $data = new SearchGenreDTO($request->validated());
+        $data   = new SearchGenreDTO($request->validated());
 
         $genres = $this->service->get_genres($data);
 
@@ -39,10 +41,9 @@ class GenreController extends Controller
     {
         $data = new StoreGenreDTO($request->validated());
 
-        if ($this->service->store_genre($data)){
+        if ($this->service->store_genre($data)) {
             return redirect()->route('admin.genres.index');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
         }
     }
@@ -50,7 +51,6 @@ class GenreController extends Controller
     public function edit(int $genreID): View
     {
         $genre = $this->service->get_genre($genreID);
-
         return view('admin.genres.edit', ['genre' => $genre]);
     }
 
@@ -58,20 +58,18 @@ class GenreController extends Controller
     {
         $data = new UpdateGenreDTO($request->validated());
 
-        if ($this->service->update_genre($data)){
+        if ($this->service->update_genre($data)) {
             return redirect()->route('admin.genres.index');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
         }
     }
 
     public function delete(int $genreID): RedirectResponse
     {
-        if ($this->service->delete_genre($genreID)){
+        if ($this->service->delete_genre($genreID)) {
             return redirect()->route('admin.genres.index');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
         }
     }

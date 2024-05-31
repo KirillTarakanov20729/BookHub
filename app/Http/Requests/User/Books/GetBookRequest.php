@@ -26,7 +26,7 @@ class GetBookRequest extends FormRequest
             'age_limit_id' => 'nullable|integer|min:0|max:21',
             'author_id' => 'nullable|integer',
             'genre_id' => 'nullable|integer',
-            'publisher_id' => 'nullable|integer',
+            'availability' => 'nullable|integer|min:0|max:1',
         ];
     }
 }

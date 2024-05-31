@@ -22,8 +22,9 @@ class GetUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subscription_type_id' => ['nullable', 'integer', 'exists:subscription_types,id'],
+            'subscription_type_id' => ['nullable', 'integer'],
             'name' => ['nullable', 'string', 'max:255'],
+            'page' => ['nullable', 'integer'],
         ];
     }
 }

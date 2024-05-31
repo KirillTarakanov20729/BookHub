@@ -24,6 +24,6 @@
     @yield('content')
 </main>
 
-
+<script src="https://kit.fontawesome.com/997ddac366.js" crossorigin="anonymous"></script>
 </body>
 </html>

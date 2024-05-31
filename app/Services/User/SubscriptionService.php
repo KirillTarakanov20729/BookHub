@@ -4,12 +4,15 @@ namespace App\Services\User;
 
 use App\Models\Subscription;
 use App\Models\SubscriptionType;
+use Illuminate\Support\Facades\Cache;
 
 class SubscriptionService
 {
     public function get_subscription_types()
     {
-        return SubscriptionType::all();
+        return Cache::remember('subscription_types', 3600, function () {
+            return SubscriptionType::with('features')->get();
+        });
     }
     public function change_subscription($user, int $subscription_type_id)
     {

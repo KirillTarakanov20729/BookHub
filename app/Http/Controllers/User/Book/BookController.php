@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\User\Book;
 
-use App\DTO\Admin\Book\SearchBookDTO;
+use App\DTO\Admin\Book\AdminSearchBookDTO;
+use App\DTO\User\Book\UserSearchBookDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Books\GetBookRequest;
 use App\Models\Book;
 use App\Services\User\UserBookService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class BookController extends Controller
@@ -30,17 +33,14 @@ class BookController extends Controller
 
     public function index(GetBookRequest $request): View
     {
-        $data = new SearchBookDTO($request->validated());
+        $data = new UserSearchBookDTO($request->validated());
 
         $books = $this->service->get_books($data);
 
         $data = $this->service->get_data();
         return view('user.books.index',[
             'books' => $books,
-            'genres' => $data['genres'],
-            'authors' => $data['authors'],
-            'publishers' => $data['publishers'],
-            'age_limits' => $data['age_limits'],
+            'data' => $data
         ]);
     }
 
@@ -50,9 +50,12 @@ class BookController extends Controller
 
         $user = $this->service->get_user();
 
+        $authors = $this->service->get_name_author($book);
+
         return view('user.books.show', [
             'book' => $book,
-            'user' => $user
+            'user' => $user,
+            'authors' => $authors
         ]);
     }
 
@@ -67,7 +70,7 @@ class BookController extends Controller
             return response($response, 200)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'inline; filename="' . $book->name . '.pdf"')
-                ->header('Content-Length', strlen($response));
+                ->header('Content-Length', (string)strlen($response));
         }
     }
 

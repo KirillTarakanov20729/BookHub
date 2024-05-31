@@ -2,7 +2,7 @@
 
 namespace App\DTO\Admin\Feature;
 
-use App\DTO\UpdateEntityDTO;
+use App\DTO\Admin\UpdateEntityDTO;
 
 class UpdateFeatureDTO extends UpdateEntityDTO
 {

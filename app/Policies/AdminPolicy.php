@@ -12,7 +12,7 @@ class AdminPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -28,7 +28,7 @@ class AdminPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminPolicy
      */
     public function update(User $user, User $model): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -44,7 +44,7 @@ class AdminPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -52,7 +52,7 @@ class AdminPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -60,6 +60,6 @@ class AdminPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        //
+        return $user->is_admin;
     }
 }

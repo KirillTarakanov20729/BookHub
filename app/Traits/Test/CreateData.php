@@ -10,6 +10,7 @@ use App\Models\Publisher;
 use App\Models\Subscription;
 use App\Models\SubscriptionType;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 trait CreateData
@@ -40,17 +41,17 @@ trait CreateData
 
     public function createUsualUser(): void
     {
-        $this->user = $this->createUser('test', 'a@a.com', 'password', 0);
+        $this->user = $this->createUser('test', 'a@a.com', 'password', false);
     }
 
     public function createSecondUsualUser(): void
     {
-        $this->secondUser = $this->createUser('test2', 'b@a.com', 'password', 0);
+        $this->secondUser = $this->createUser('test2', 'b@a.com', 'password', false);
     }
 
     public function createAdminUser(): void
     {
-        $this->adminUser = $this->createUser('admin', 'admin@a.com', 'password', 1);
+        $this->adminUser = $this->createUser('admin', 'admin@a.com', 'password', false);
     }
 
     public function getUsualUser(): User
@@ -71,7 +72,8 @@ trait CreateData
 
     public function createBook(): void
     {
-        $this->book = Book::factory(1)->create(['subscription_type_id' => 1])->first();
+        $text_path = Storage::fake('public')->put('storage/books/text', UploadedFile::fake()->create('1.pdf', 700, 'pdf'));
+        $this->book = Book::factory(1)->create(['subscription_type_id' => 1, 'text_path' => $text_path])->first();
         $this->book->authors()->sync([$this->author->id]);
         $this->book->genres()->sync([$this->genre->id]);
         $this->book->publishers()->sync([$this->publisher->id]);

@@ -18,7 +18,9 @@ use App\Http\Requests\Admin\SubscriptionType\UpdateSubscriptionTypeRequest;
 use App\Services\Admin\FeatureService;
 use App\Services\Admin\SubscriptionTypeService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SubscriptionTypeController extends Controller
 {
@@ -30,20 +32,23 @@ class SubscriptionTypeController extends Controller
 
     public function index(GetSubscriptionTypeRequest $request): View
     {
-        $data = new SearchSubscriptionTypeDTO($request->validated());
-
+        $data               = new SearchSubscriptionTypeDTO($request->validated());
         $subscription_types = $this->service->get_subscription_types($data);
-
         return view('admin.subscription_types.index', ['subscription_types' => $subscription_types]);
     }
 
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
-        $features = $this->service->get_features();
+        try {
+            $features = $this->service->get_features();
 
-        return view('admin.subscription_types.create', [
-            'features' => $features
-        ]);
+            return view('admin.subscription_types.create', [
+                'features' => $features
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
+        }
     }
 
     public function store(StoreSubscriptionTypeRequest $request): RedirectResponse
@@ -60,14 +65,12 @@ class SubscriptionTypeController extends Controller
 
     public function edit(int $subscriptionTypeID): View
     {
-        $subscription_type = $this->service->get_subscription_type($subscriptionTypeID);
-
-        $features = $this->service->get_features();
-
-        return view('admin.subscription_types.edit', [
-            'subscription_type' => $subscription_type,
-            'features' => $features
-        ]);
+            $subscription_type = $this->service->get_subscription_type($subscriptionTypeID);
+            $features          = $this->service->get_features();
+            return view('admin.subscription_types.edit', [
+                'subscription_type' => $subscription_type,
+                'features' => $features
+            ]);
     }
 
     public function update(UpdateSubscriptionTypeRequest $request): RedirectResponse
@@ -84,10 +87,9 @@ class SubscriptionTypeController extends Controller
 
     public function delete(int $subscriptionTypeID): RedirectResponse
     {
-        if ($this->service->delete_subscription_type($subscriptionTypeID)){
+        if ($this->service->delete_subscription_type($subscriptionTypeID)) {
             return redirect()->route('admin.subscription_types.index');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
         }
     }

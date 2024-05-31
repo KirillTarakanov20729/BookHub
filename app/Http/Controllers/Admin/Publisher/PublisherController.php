@@ -11,7 +11,9 @@ use App\Http\Requests\Admin\Publisher\StorePublisherRequest;
 use App\Http\Requests\Admin\Publisher\UpdatePublisherRequest;
 use App\Services\Admin\PublisherService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class PublisherController extends Controller
 {
@@ -23,10 +25,8 @@ class PublisherController extends Controller
 
     public function index(GetPublisherRequest $request): View
     {
-        $data = new SearchPublisherDTO($request->validated());
-
+        $data       = new SearchPublisherDTO($request->validated());
         $publishers = $this->service->get_publishers($data);
-
         return view('admin.publishers.index', ['publishers' => $publishers]);
     }
 
@@ -53,7 +53,6 @@ class PublisherController extends Controller
     public function edit($publisherID): View
     {
         $publisher = $this->service->get_publisher($publisherID);
-
         return view('admin.publishers.edit', ['publisher' => $publisher]);
     }
 

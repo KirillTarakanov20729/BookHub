@@ -10,6 +10,9 @@ class AgeLimit extends Model
 {
     use HasFactory;
 
+
+    public $timestamps = false;
+
     protected $fillable = [
         'age_limit',
     ];

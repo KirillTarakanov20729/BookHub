@@ -5,8 +5,10 @@ namespace App\Services\Admin;
 use App\DTO\Admin\Publisher\SearchPublisherDTO;
 use App\DTO\Admin\Publisher\StorePublisherDTO;
 use App\DTO\Admin\Publisher\UpdatePublisherDTO;
+use App\Http\Filters\PublisherFilter;
 use App\Models\Publisher;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class PublisherService
@@ -14,18 +16,16 @@ class PublisherService
 
     public function get_publishers(SearchPublisherDTO $data): LengthAwarePaginator
     {
-        $publishers = Publisher::query();
+        $filter = app()->make(PublisherFilter::class, ['queryParams' => $data->toArray()]);
 
-        if (isset($data->name)) {
-            $publishers->where('name', 'like', '%' . $data->name . '%');
-        }
-
-        return $publishers->paginate(20);
+        return Publisher::filter($filter)->paginate(20)->withQueryString();
     }
 
     public function get_publisher(int $id): Publisher
     {
-        return Publisher::query()->findOrFail($id);
+        return Cache::remember('publisher_'.$id, 3600, function () use ($id) {
+            return Publisher::query()->findOrFail($id);
+        });
     }
 
     public function store_publisher(StorePublisherDTO $data): bool
@@ -33,7 +33,13 @@ class PublisherService
         try {
             $publisher       = new Publisher;
             $publisher->name = $data->name;
-            return $publisher->save();
+
+            $publisher->save();
+
+            Cache::put('publisher_' . $publisher->id, $publisher, 3600);
+            Cache::forget('publishers');
+
+            return true;
         } catch(\Exception $exception) {
             Log::error($exception);
             return false;
@@ -45,7 +51,13 @@ class PublisherService
         try {
             $publisher       = Publisher::query()->findOrFail($data->id);
             $publisher->name = $data->name;
-            return $publisher->save();
+
+            $publisher->save();
+
+            Cache::put('publisher_' . $publisher->id, $publisher, 3600);
+            Cache::forget('publishers');
+
+            return true;
         } catch(\Exception $exception) {
             Log::error($exception);
             return false;
@@ -56,6 +68,10 @@ class PublisherService
     {
         try {
             $publisher = Publisher::query()->findOrFail($id);
+
+            Cache::forget('publisher_' . $publisher->id);
+            Cache::forget('publishers');
+
             return $publisher->delete();
         } catch (\Exception $exception) {
             Log::error($exception);

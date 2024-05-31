@@ -27,22 +27,22 @@
             @endif
 
             @if(!$book->users->contains(auth()->user()))
-                <x-form.form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST">
+                <x-form.store-form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST">
                     <x-form.button class="mt-2" style="width: 100%;">
                         <x-card.a>
                             ОТМЕТИТЬ КАК ПРОЧИТАННУЮ
                         </x-card.a>
                     </x-form.button>
-                </x-form.form>
+                </x-form.store-form>
             @else
-                <x-form.form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST"
+                <x-form.store-form action="{{ route('user.books.was_read', ['book' => $book->id]) }}" method="POST"
                              class="w-100">
                     <x-form.button class="mt-2" style="width: 100%;">
                         <x-card.a>
                             КНИГА ПРОЧИТАНА
                         </x-card.a>
                     </x-form.button>
-                </x-form.form>
+                </x-form.store-form>
             @endif
         </div>
 
@@ -54,7 +54,18 @@
             </div>
 
             <div class="mt-2">
-                @include('includes.user.show-books.book-card.entity-block', ['title' => 'Авторы', 'entities' => $book->authors])
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="fs-4">
+                        Авторы
+                    </div>
+
+                    <div class="fs-4">
+                        @foreach($authors as $author)
+                            {{ $author->full_name }}@if(!$loop->last),@endif
+                        @endforeach
+                    </div>
+                </div>
 
                 @include('includes.user.show-books.book-card.entity-block', ['title' => 'Жанры', 'entities' => $book->genres])
 
@@ -62,7 +73,7 @@
 
                 @include('includes.user.show-books.book-card.info-block', ['title' => 'Возрастные ограничения', 'info' => $book->age_limit->age_limit. '+'])
 
-                @include('includes.user.show-books.book-card.info-block', ['title' => 'Год написания', 'info' => $book->release_date->format('Y')])
+                @include('includes.user.show-books.book-card.info-block', ['title' => 'Год написания', 'info' => $book->release_date])
 
             </div>
         </div>

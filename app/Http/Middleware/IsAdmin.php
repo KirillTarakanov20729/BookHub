@@ -22,6 +22,5 @@ class IsAdmin
         else {
             return abort(404);
         }
-
     }
 }

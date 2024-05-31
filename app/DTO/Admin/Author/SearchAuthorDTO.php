@@ -2,9 +2,11 @@
 
 namespace App\DTO\Admin\Author;
 
-use App\DTO\SearchEntityDTO;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class SearchAuthorDTO extends SearchEntityDTO
+class SearchAuthorDTO extends DataTransferObject
 {
+    public? string $full_name;
 
+    public? int $page;
 }

@@ -2,7 +2,7 @@
 
 @section('form')
 
-    <x-form.form action="{{route('admin.' . $entity->getTable() . '.update', ['id' => $entity->id])}}" method="POST">
+    <x-form.store-form action="{{route('admin.' . $entity->getTable() . '.update', ['id' => $entity->id])}}" method="POST">
         @method('PUT')
 
         <x-form.label>
@@ -20,6 +20,6 @@
 
         <input type="hidden" name="id" value="{{ $entity->id }}">
 
-    </x-form.form>
+    </x-form.store-form>
 
 @endsection

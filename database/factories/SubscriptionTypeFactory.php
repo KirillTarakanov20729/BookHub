@@ -17,6 +17,7 @@ class SubscriptionTypeFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => fake()->word(),
             'price' => fake()->numberBetween(100, 1000)
         ];
     }

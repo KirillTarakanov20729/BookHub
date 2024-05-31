@@ -2,9 +2,14 @@
 
 namespace App\DTO\Admin\Author;
 
-use App\DTO\UpdateEntityDTO;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class UpdateAuthorDTO extends UpdateEntityDTO
+class UpdateAuthorDTO extends DataTransferObject
 {
+    public int $id;
+    public string $first_name;
 
+    public string $last_name;
+
+    public string $middle_name;
 }

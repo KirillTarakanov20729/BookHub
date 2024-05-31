@@ -13,11 +13,9 @@
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $age_limit
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
@@ -26,44 +24,45 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit query()
  * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit whereAgeLimit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AgeLimit whereUpdatedAt($value)
  */
 	class AgeLimit extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
- * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $full_name
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $middle_name
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
  * @method static \Database\Factories\AuthorFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Author filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|Author newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Author newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Author query()
- * @method static \Illuminate\Database\Eloquent\Builder|Author whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Author whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Author whereFullName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Author whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Author whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Author whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Author whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Author whereMiddleName($value)
  */
 	class Author extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
  * @property string $short_description
  * @property string $full_description
- * @property \Illuminate\Support\Carbon $release_date
+ * @property int $release_date
  * @property string $image_path
  * @property string $text_path
  * @property int $subscription_type_id
@@ -81,6 +80,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Database\Factories\BookFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Book filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|Book newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Book newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Book query()
@@ -101,64 +101,75 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
  *
+ *
+ * @property int $id
+ * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $subscription_types
  * @property-read int|null $subscription_types_count
+ * @method static \Database\Factories\FeatureFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|Feature newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Feature newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Feature query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feature whereName($value)
  */
 	class Feature extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
  * @method static \Database\Factories\GenreFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Genre filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre query()
- * @method static \Illuminate\Database\Eloquent\Builder|Genre whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Genre whereUpdatedAt($value)
  */
 	class Genre extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
  * @method static \Database\Factories\PublisherFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Publisher filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher query()
- * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publisher whereUpdatedAt($value)
  */
 	class Publisher extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ResetPasswordRequest newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ResetPasswordRequest newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ResetPasswordRequest query()
+ */
+	class ResetPasswordRequest extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ *
  *
  * @property int $id
  * @property int $subscription_type_id
@@ -167,7 +178,7 @@ namespace App\Models{
  * @property int|null $price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\SubscriptionType $subscriptionType
+ * @property-read \App\Models\SubscriptionType $subscription_type
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\SubscriptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Subscription newModelQuery()
@@ -186,13 +197,11 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
  * @property int $price
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Book> $books
  * @property-read int|null $books_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Feature> $features
@@ -200,21 +209,20 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Subscription> $subscriptions
  * @property-read int|null $subscriptions_count
  * @method static \Database\Factories\SubscriptionTypeFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType query()
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionType whereUpdatedAt($value)
  */
 	class SubscriptionType extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -224,6 +232,7 @@ namespace App\Models{
  * @property int|null $active_book_id
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
+ * @property \Illuminate\Support\Carbon|null $password_changed_at
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -235,6 +244,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|User filter(\App\Http\Filters\FilterInterface $filter)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -246,6 +256,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePasswordChangedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSubscriptionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)

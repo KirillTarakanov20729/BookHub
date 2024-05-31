@@ -2,7 +2,7 @@
 
 namespace App\DTO\Admin\Publisher;
 
-use App\DTO\UpdateEntityDTO;
+use App\DTO\Admin\UpdateEntityDTO;
 
 class UpdatePublisherDTO extends UpdateEntityDTO
 {

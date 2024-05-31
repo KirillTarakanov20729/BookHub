@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Book;
 
-use App\DTO\Admin\Book\SearchBookDTO;
+use App\DTO\Admin\Book\AdminSearchBookDTO;
 use App\DTO\Admin\Book\StoreBookDTO;
 use App\DTO\Admin\Book\UpdateBookDTO;
 use App\DTO\Book\BookData;
@@ -13,6 +13,7 @@ use App\Http\Requests\Admin\Book\StoreBookRequest;
 use App\Http\Requests\Admin\Book\UpdateBookRequest;
 use App\Services\Admin\AdminBookService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
@@ -24,24 +25,18 @@ class BookController extends Controller
         $this->service = $service;
     }
 
-    public function index(GetBookRequest $request): View
+    public function index(GetBookRequest $request)
     {
+        $book_info = new AdminSearchBookDTO($request->validated());
 
-        try {
-            $book_info = new SearchBookDTO($request->validated());
-            $books     = $this->service->get_books($book_info);
-            $data      = $this->service->get_data();
-            return view('admin.books.index', [
-                'books' => $books,
-                'genres' => $data['genres'],
-                'authors' => $data['authors'],
-                'publishers' => $data['publishers'],
-                'subscription_types' => $data['subscription_types'],
-                'age_limits' => $data['age_limits']
-            ]);
-        } catch (\Exception $e) {
+        $books     = $this->service->get_books($book_info);
 
-        }
+        $data      = $this->service->get_data();
+
+        return view('admin.books.index', [
+            'books' => $books,
+            'data' => $data
+        ]);
     }
 
     public function create(): View
@@ -49,11 +44,7 @@ class BookController extends Controller
         $data = $this->service->get_data();
 
         return view('admin.books.create', [
-            'genres' => $data['genres'],
-            'age_limits' => $data['age_limits'],
-            'authors' => $data['authors'],
-            'publishers' => $data['publishers'],
-            'subscription_types' => $data['subscription_types']
+            'data' => $data
         ]);
     }
 
@@ -77,12 +68,9 @@ class BookController extends Controller
 
         return view('admin.books.edit', [
             'book' => $book,
-            'age_limits' => $data['age_limits'],
-            'genres' => $data['genres'],
-            'authors' => $data['authors'],
-            'publishers' => $data['publishers'],
-            'subscription_types' => $data['subscription_types']
+            'data' => $data
         ]);
+
     }
 
     public function update(UpdateBookRequest $request): RedirectResponse
@@ -91,15 +79,17 @@ class BookController extends Controller
 
         if ($this->service->update_book($data)){
             return redirect()->route('admin.books.index');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
         }
     }
 
     public function delete(int $id): RedirectResponse
     {
-        $this->service->delete_book($id);
-        return redirect()->route('admin.books.index');
+        if ($this->service->delete_book($id)) {
+            return redirect()->route('admin.books.index');
+        } else {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка, смотрите логи']);
+        }
     }
 }

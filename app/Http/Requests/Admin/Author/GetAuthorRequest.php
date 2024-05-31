@@ -22,7 +22,7 @@ class GetAuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|max:255',
+            'full_name' => 'nullable|string|max:255',
         ];
     }
 }

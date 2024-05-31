@@ -8,7 +8,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    private ProfileService $service;
+    public ProfileService $service;
     public function __construct(ProfileService $service)
     {
         $this->service = $service;

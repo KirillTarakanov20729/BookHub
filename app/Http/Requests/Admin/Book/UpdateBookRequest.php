@@ -26,7 +26,7 @@ class UpdateBookRequest extends FormRequest
             'name' => ['required', 'string', 'max:64'],
             'image' => ['nullable', 'dimensions:width=700,height=900'],
             'text' => ['nullable'],
-            'release_date' => ['required', 'date'],
+            'release_date' => ['required', 'int', 'min:1500', 'max:2024'],
             'authors_id' => ['required', 'array', 'exists:authors,id'],
             'genres_id' => ['required', 'array', 'exists:genres,id'],
             'publishers_id' => ['required', 'array', 'exists:publishers,id'],

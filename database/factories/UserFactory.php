@@ -31,7 +31,7 @@ class UserFactory extends Factory
         ];
     }
 
-    private function create_subscription()
+    private function create_subscription(): int
     {
         $subscription = Subscription::factory()->create();
 

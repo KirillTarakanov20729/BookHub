@@ -43,4 +43,23 @@ class LoginUserTest extends TestCase
         ])
             ->assertRedirect('/login');
     }
+
+    public function test_user_can_logout(): void
+    {
+        $this->get('/login')
+            ->assertSuccessful();
+
+        $this->createUsualUser();
+
+        $user = $this->getUsualUser();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password1',
+        ])
+            ->assertRedirect('/login');
+
+        $this->post('/logout')
+            ->assertRedirect('/login');
+    }
 }

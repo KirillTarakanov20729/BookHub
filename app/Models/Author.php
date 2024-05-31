@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\Models\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Author extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
+
+    public $timestamps = false;
 
     protected $fillable = [
-        'name',
+        'first_name', 'last_name', 'middle_name', 'full_name'
     ];
 
     public function books(): BelongsToMany

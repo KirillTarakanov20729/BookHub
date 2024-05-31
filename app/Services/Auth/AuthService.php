@@ -3,15 +3,17 @@
 namespace App\Services\Auth;
 
 use App\DTO\Auth\LoginDTO;
+use App\DTO\Auth\RegisterDTO;
 use App\Models\Subscription;
 use App\Models\SubscriptionType;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class AuthService
 {
-    public function register_user(array $data): bool
+    public function register_user(RegisterDTO $data): bool
     {
         try {
             $subscription = new Subscription();
@@ -20,10 +22,11 @@ class AuthService
             $subscription->save();
 
             $user           = new User();
-            $user->name     = $data['name'];
-            $user->email    = $data['email'];
-            $user->password = bcrypt($data['password']);
+            $user->name     = $data->name;
+            $user->email    = $data->email;
+            $user->password = bcrypt($data->password);
             $user->subscription_id = $subscription->id;
+
             return $user->save();
         }
         catch (\Exception $exception) {
@@ -36,6 +39,7 @@ class AuthService
     {
         try {
             if (Auth::attempt(['email' => $data->email, 'password' => $data->password], $data->remember)) {
+
                 return true;
             }
             else {

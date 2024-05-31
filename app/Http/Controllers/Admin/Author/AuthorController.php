@@ -11,7 +11,9 @@ use App\Http\Requests\Admin\Author\StoreAuthorRequest;
 use App\Http\Requests\Admin\Author\UpdateAuthorRequest;
 use App\Services\Admin\AuthorService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class AuthorController extends Controller
 {
@@ -23,7 +25,7 @@ class AuthorController extends Controller
 
     public function index(GetAuthorRequest $request): View
     {
-        $data = new SearchAuthorDTO($request->validated());
+        $data    = new SearchAuthorDTO($request->validated());
 
         $authors = $this->service->get_authors($data);
 
@@ -50,7 +52,6 @@ class AuthorController extends Controller
     public function edit(int $authorID): View
     {
         $author = $this->service->get_author($authorID);
-
         return view('admin.authors.edit', ['author' => $author]);
     }
 

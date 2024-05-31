@@ -5,7 +5,7 @@
 
     <div class="fs-4">
         @foreach($entities as $key => $entity)
-            {{ $entity->name }}@if (!$loop->last),@endif
+                {{ $entity->name }}@if(!$loop->last),@endif
         @endforeach
     </div>
 </div>

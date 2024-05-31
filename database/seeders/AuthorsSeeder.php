@@ -17,10 +17,26 @@ class AuthorsSeeder extends Seeder
         $authors = File::get(database_path('data/authors.txt'));
         $authorsArray = explode("\n", $authors);
 
-        foreach($authorsArray as $authorName) {
-            if(trim($authorName) !== '') {
-                Author::factory()->create(['name' => $authorName]);
+        foreach ($authorsArray as $authorData) {
+            $authorParts = explode(" ", $authorData);
+
+            if (count($authorParts) == 3) {
+                $author = new Author;
+
+                $author->last_name   = $authorParts[0];
+                $author->first_name  = $authorParts[1];
+                $author->middle_name = $authorParts[2];
+                $author->full_name   = $authorParts[0] . ' ' . $authorParts[1] . ' ' . $authorParts[2];
+                $author->save();
+            } elseif (count($authorParts) == 2) {
+                $author = new Author;
+
+                $author->last_name  = $authorParts[0];
+                $author->first_name = $authorParts[1];
+                $author->full_name  = $authorParts[0] . ' ' . $authorParts[1];
+                $author->save();
             }
+
         }
     }
 }

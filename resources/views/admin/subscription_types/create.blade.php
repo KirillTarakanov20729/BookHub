@@ -2,7 +2,7 @@
 
 @section('form')
 
-    <x-form.form action="{{route('admin.subscription_types.store')}}" method="POST">
+    <x-form.store-form action="{{route('admin.subscription_types.store')}}" method="POST">
 
         <x-form.label>
             Напишите название типа подписки
@@ -30,6 +30,6 @@
             </x-form.button>
         </x-form.item>
 
-    </x-form.form>
+    </x-form.store-form>
 
 @endsection

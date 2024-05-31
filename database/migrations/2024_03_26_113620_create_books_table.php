@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('short_description');
             $table->text('full_description');
-            $table->date('release_date');
+            $table->integer('release_date');
             $table->string('image_path');
             $table->string('text_path');
             $table->foreignId('subscription_type_id')->constrained();

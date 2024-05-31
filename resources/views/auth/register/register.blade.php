@@ -5,7 +5,7 @@
         <x-card.card-body>
 
             <div class="mb-md-0 mt-md-0 pb-1">
-                <x-form.form method="POST" action="#">
+                <x-form.store-form method="POST" action="#">
 
                     <x-form.label>
                         Регистрация
@@ -43,7 +43,7 @@
                     </x-form.button>
 
 
-                </x-form.form>
+                </x-form.store-form>
             </div>
 
         </x-card.card-body>

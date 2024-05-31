@@ -2,7 +2,7 @@
 
 namespace App\DTO\Admin\SubscriptionType;
 
-use App\DTO\StoreEntityDTO;
+use App\DTO\Admin\StoreEntityDTO;
 
 class StoreSubscriptionTypeDTO extends StoreEntityDTO
 {

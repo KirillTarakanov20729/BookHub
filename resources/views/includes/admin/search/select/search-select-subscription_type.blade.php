@@ -1,8 +1,8 @@
 <x-form.item>
     <x-form.select class="form-select form-select-lg" name="subscription_type_id">
-        <option @if(request('subscription_type_id') == 0) selected @endif value="0">Любая</option>
-        <option @if(request('subscription_type_id') == 1) selected @endif value="1">Без подписки</option>
-        <option @if(request('subscription_type_id') == 2) selected @endif value="2">Базовая</option>
-        <option @if(request('subscription_type_id') == 3) selected @endif value="3">Премиум</option>
+        <option value="">Любая</option>
+        @foreach($data->subscription_types as $subscription_type)
+            <option @if(request('subscription_type_id') == $subscription_type['id']) selected @endif value="{{ $subscription_type['id'] }}">{{ $subscription_type['name'] }}</option>
+        @endforeach
     </x-form.select>
 </x-form.item>

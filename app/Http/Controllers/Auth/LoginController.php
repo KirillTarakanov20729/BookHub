@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\Login\LoginRequest;
 use App\Services\Auth\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class LoginController extends Controller
@@ -29,7 +30,9 @@ class LoginController extends Controller
 
         if ($this->authService->login_user($data))
         {
-            return redirect()->route('user.books.index');
+            $request->session()->regenerate();
+
+            return redirect()->intended('/books/home');
         }
         else
         {
